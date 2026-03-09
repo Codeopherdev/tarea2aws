@@ -1,0 +1,34 @@
+# Dependencias de Node
+node_modules/
+
+# Logs generados por herramientas/servidores
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Variables de entorno y configuraciones de claves secretas
+.env
+.env.test
+.env.production
+.env.local
+
+# Archivos específicos de sistemas operativos
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Archivos de cobertura de pruebas
+coverage/
+
+# Directorios de build
+dist/
+build/
+out/
+
+# Configuración de entornos de desarrollo / IDEs automáticos
+.idea/
+.vscode/
+*.swp
+*.swo

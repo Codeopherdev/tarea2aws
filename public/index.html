@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Muro de Red Social</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f2f5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .navbar-brand {
+            font-weight: bold;
+            color: #1877f2 !important;
+            font-size: 1.5rem;
+        }
+
+        .card {
+            border-radius: max(0px, min(8px, calc((100vw - 4px - 100%) * 9999)));
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            border: none;
+            margin-bottom: 20px;
+        }
+
+        .create-post-card {
+            margin-top: 15px;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border: 4px solid #fff;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+            margin-top: -50px;
+            background-color: white;
+        }
+
+        .profile-cover {
+            height: 100px;
+            background: linear-gradient(135deg, #1877f2, #0d6efd);
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+        }
+
+        .post-img {
+            width: 100%;
+            max-height: 500px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-top: 15px;
+            cursor: pointer;
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+        }
+
+        .post-header .avatar {
+            margin-right: 12px;
+        }
+
+        .post-date {
+            font-size: 0.85rem;
+            color: #65676B;
+        }
+
+        .post-author {
+            font-weight: 600;
+            color: #050505;
+            font-size: 0.95rem;
+        }
+
+        .post-body {
+            font-size: 0.95rem;
+            color: #050505;
+            white-space: pre-wrap;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.4s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Custom file input appearance */
+        input[type=file]::file-selector-button {
+            border: none;
+            background: #e4e6eb;
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: #050505;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        input[type=file]::file-selector-button:hover {
+            background: #d8dadf;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navbar Superior -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top shadow-sm">
+        <div class="container">
+            <a class="navbar-brand" href="#"><i class="bi bi-globe-americas"></i> SocialWall</a>
+            <div class="d-flex align-items-center">
+                <img src="https://ui-avatars.com/api/?name=Usuario+de+Prueba&background=1877f2&color=fff&size=40"
+                    alt="Avatar" class="rounded-circle">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenido Principal -->
+    <div class="container mt-4">
+        <div class="row">
+            <!-- Columna Izquierda (Perfil del Usuario Activo) -->
+            <div class="col-md-4 col-lg-3 d-none d-md-block">
+                <div class="card">
+                    <div class="profile-cover"></div>
+                    <div class="card-body text-center pt-0">
+                        <img src="https://ui-avatars.com/api/?name=Usuario+de+Prueba&background=1877f2&color=fff&size=128"
+                            alt="Perfil" class="avatar profile-avatar mb-2">
+                        <h5 class="card-title fw-bold mb-0">Usuario de Prueba</h5>
+                        <p class="text-muted small mt-1">AWS & Node.js Developer</p>
+                        <hr>
+                        <ul class="list-unstyled text-start small text-muted">
+                            <li class="mb-2"><i class="bi bi-geo-alt-fill text-primary me-2"></i> us-east-1 Region</li>
+                            <li class="mb-2"><i class="bi bi-cloud-fill text-primary me-2"></i> Cloud Architect</li>
+                            <li><i class="bi bi-calendar-check-fill text-primary me-2"></i> Se unió en 2023</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Central (Muro de Publicaciones) -->
+            <div class="col-md-8 col-lg-6">
+                <!-- Zona: Formulario para Crear Posts -->
+                <div class="card create-post-card">
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <img src="https://ui-avatars.com/api/?name=Usuario+de+Prueba&background=1877f2&color=fff&size=50"
+                                alt="Avatar" class="avatar me-2">
+                            <button type="button"
+                                class="btn btn-light rounded-pill text-start flex-grow-1 text-muted fw-bold"
+                                style="background-color:#E4E6EB; border:none;"
+                                onclick="document.getElementById('inputContenido').focus()">
+                                ¿Qué estás pensando, Usuario?
+                            </button>
+                        </div>
+                        <hr class="mt-2 mb-3">
+                        <form id="createPostForm">
+                            <!-- Input Oculto o readonly para el Usuario activo (para fines prácticos lo mostramos) -->
+                            <div class="mb-2 d-none">
+                                <label class="form-label small fw-bold">Modificar autor (pruebas):</label>
+                                <input type="text" class="form-control form-control-sm" id="inputUsuario"
+                                    value="Usuario de Prueba" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <textarea class="form-control border-0 px-0" id="inputContenido" rows="2"
+                                    placeholder="Escribe tu publicación aquí..." required
+                                    style="resize: none; font-size: 1.1rem; box-shadow: none;"></textarea>
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-between p-2 rounded"
+                                style="border: 1px solid #CED0D4;">
+                                <div>
+                                    <label for="inputImagen"
+                                        class="btn btn-sm btn-light m-0 text-success fw-bold d-flex align-items-center">
+                                        <i class="bi bi-image fs-5 me-2"></i> Foto/Video
+                                    </label>
+                                    <input class="d-none" type="file" id="inputImagen" accept="image/*">
+                                </div>
+                                <span id="fileSelectedText" class="text-muted small ms-2 d-none">Archivo
+                                    seleccionado</span>
+                            </div>
+
+                            <div class="d-grid mt-3">
+                                <button type="submit" class="btn btn-primary fw-bold text-white rounded-3 shadow-sm"
+                                    id="btnSubmit">
+                                    Publicar <i class="bi bi-send-fill ms-1"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Zona: Contenedor Dinámico de Publicaciones -->
+                <div id="postsContainer">
+                    <div class="text-center my-5" id="loadingSpinner">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando publicaciones...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna Derecha -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="card">
+                    <div class="card-body">
+                        <h6 class="text-muted fw-bold mb-3">Tendencias de AWS</h6>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><a href="#" class="text-decoration-none fw-bold text-dark">#DynamoDB</a>
+                            </li>
+                            <li class="mb-2"><a href="#" class="text-decoration-none fw-bold text-dark">#S3Buckets</a>
+                            </li>
+                            <li class="mb-2"><a href="#" class="text-decoration-none fw-bold text-dark">#NodeJS</a></li>
+                            <li class="mb-0"><a href="#" class="text-decoration-none fw-bold text-dark">#Serverless</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- App JavaScript para consumir la API -->
+    <script>
+        const API_URL = '/api/posts';
+
+        // Elementos interactivos del DOM
+        const form = document.getElementById('createPostForm');
+        const postsContainer = document.getElementById('postsContainer');
+        const btnSubmit = document.getElementById('btnSubmit');
+        const inputImagen = document.getElementById('inputImagen');
+        const fileSelectedText = document.getElementById('fileSelectedText');
+
+        // Escuchar cuando se selecciona un archivo para mostrar el texto en UI
+        inputImagen.addEventListener('change', function () {
+            if (this.files && this.files.length > 0) {
+                fileSelectedText.textContent = this.files[0].name;
+                fileSelectedText.classList.remove('d-none');
+            } else {
+                fileSelectedText.classList.add('d-none');
+            }
+        });
+
+        // Formateador de fechas
+        const formatearFecha = (timestamp) => {
+            const date = new Date(Number(timestamp));
+            // Ejemplo: 9 mar. 2026, 10:30
+            return date.toLocaleString('es-ES', {
+                day: 'numeric', month: 'short', year: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
+        };
+
+        // UI Avatars dinámico por nombre de usuario
+        const getAvatarUrl = (name) => {
+            return `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff&size=50`;
+        };
+
+        // Generar Tarjeta (Card) en HTML para un post
+        const createPostElement = (post) => {
+            const div = document.createElement('div');
+            div.className = 'card fade-in';
+
+            // Construir la imagen de S3 condicionalmente si existe
+            let imagenHtml = '';
+            if (post.ImagenUrl && post.ImagenUrl !== 'null') {
+                imagenHtml = `<img src="${post.ImagenUrl}" class="post-img img-fluid" alt="Imagen adjunta al post" loading="lazy">`;
+            }
+
+            div.innerHTML = `
+                <div class="card-body">
+                    <div class="post-header mb-2">
+                        <img src="${getAvatarUrl(post.Usuario)}" alt="${post.Usuario}" class="avatar">
+                        <div>
+                            <div class="post-author">${post.Usuario}</div>
+                            <div class="post-date"><i class="bi bi-globe-americas me-1"></i>${formatearFecha(post.CreatedAt)}</div>
+                        </div>
+                    </div>
+                    <div class="post-body mt-2">${post.Contenido}</div>
+                    ${imagenHtml}
+                </div>
+                <div class="card-footer bg-white border-0 py-2 d-flex justify-content-between text-muted border-top">
+                    <!-- Botones simulados de interacción -->
+                    <button class="btn btn-sm btn-light flex-fill fw-bold text-muted me-1"><i class="bi bi-hand-thumbs-up"></i> Me gusta</button>
+                    <button class="btn btn-sm btn-light flex-fill fw-bold text-muted mx-1"><i class="bi bi-chat-left"></i> Comentar</button>
+                    <button class="btn btn-sm btn-light flex-fill fw-bold text-muted ms-1"><i class="bi bi-share"></i> Compartir</button>
+                </div>
+            `;
+            return div;
+        };
+
+        // Hacer la llamada GET /api/posts a nuestro Backend
+        const loadPosts = async () => {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const posts = await response.json();
+                postsContainer.innerHTML = ''; // Limpiamos el listado
+
+                if (posts.length === 0) {
+                    postsContainer.innerHTML = `
+                        <div class="card text-center p-5 text-muted">
+                            <i class="bi bi-journal-x fs-1 mb-3"></i>
+                            <h5>No hay publicaciones en el muro</h5>
+                            <p class="mb-0">¡Sé el primero en compartir algo interesante!</p>
+                        </div>`;
+                    return;
+                }
+
+                // Inyectamos todas las cards dinámicamente
+                posts.forEach(post => {
+                    postsContainer.appendChild(createPostElement(post));
+                });
+
+            } catch (error) {
+                console.error('Error al obtener posts:', error);
+                postsContainer.innerHTML = `
+                    <div class="alert alert-danger shadow-sm">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> 
+                        Hubo un problema de conexión. Verifica si el servidor backend está corriendo y AWS configurado.
+                    </div>`;
+            }
+        };
+
+        // Manejar el submit del formulario POST /api/posts
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Estado visual de carga (Deshabilitar botón)
+            const originalBtnHtml = btnSubmit.innerHTML;
+            btnSubmit.innerHTML = `<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Publicando en S3 y DynamoDB...`;
+            btnSubmit.disabled = true;
+
+            // Recolectar datos del formulario
+            const inputUsuarioObj = document.getElementById('inputUsuario');
+            const usuarioVal = inputUsuarioObj ? inputUsuarioObj.value : "Usuario de Prueba";
+            const contenidoVal = document.getElementById('inputContenido').value;
+            const imagenFile = inputImagen.files[0];
+
+            // FormData permite enviar archivos fácilmente a través de fetch
+            const formData = new FormData();
+            formData.append('usuario', usuarioVal);
+            formData.append('contenido', contenidoVal);
+            if (imagenFile) {
+                formData.append('imagen', imagenFile); // El campo 'imagen' debe coincidir con el del backend: upload.single('imagen')
+            }
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    body: formData // No enviar Content-Type. El navegador asigna el correcto con boundaries.
+                });
+
+                if (!response.ok) throw new Error('Falló la creación del post');
+
+                // Limpiar form
+                document.getElementById('inputContenido').value = '';
+                inputImagen.value = '';
+                fileSelectedText.classList.add('d-none'); // Ocultar span
+
+                // Recargar el muro de publicaciones
+                await loadPosts();
+            } catch (error) {
+                console.error('Error al crear el post:', error);
+                alert('No se pudo crear la publicación. Verifica la consola para más detalles.');
+            } finally {
+                // Restaurar botón al estado normal
+                btnSubmit.innerHTML = originalBtnHtml;
+                btnSubmit.disabled = false;
+            }
+        });
+
+        // Configurar la carga inicial cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', loadPosts);
+    </script>
+</body>
+
+</html>

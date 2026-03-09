@@ -1,0 +1,29 @@
+{
+  "name": "red-social-aws",
+  "version": "1.0.0",
+  "description": "Muro de Red Social SPA con Node.js, Express, DynamoDB y S3",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1004.0",
+    "@aws-sdk/client-s3": "^3.1004.0",
+    "@aws-sdk/lib-dynamodb": "^3.1004.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.3.1",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^3.0.1",
+    "uuid": "^10.0.0"
+  },
+  "keywords": [
+    "aws",
+    "dynamodb",
+    "s3",
+    "express"
+  ],
+  "author": "Antigravity",
+  "license": "ISC"
+}
