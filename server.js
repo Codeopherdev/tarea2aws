@@ -122,6 +122,6 @@ app.post('/api/posts', upload.single('imagen'), async (req, res) => {
 // =========================================================
 // INICIAR SERVIDOR
 // =========================================================
-app.listen(PORT, () => {
-    console.log(`🚀 Servidor de Red Social ejecutándose en http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`🚀 Servidor de Red Social ejecutándose y listo para recibir conexiones externas en AWS en el puerto ${PORT}`);
 });
