@@ -25,8 +25,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // El SDK de AWS automáticamente tomará las credenciales del 
 // entorno o del Rol IAM asignado a la instancia EC2.
 // Por seguridad NO se hardcodean access key ni secret key.
-const s3Client = new S3Client({ region: 'us-east-1' });
-const dynamoClient = new DynamoDBClient({ region: 'us-east-1' });
+const s3Client = new S3Client({ region: process.env.AWS_REGION || 'us-east-2' });
+const dynamoClient = new DynamoDBClient({ region: process.env.AWS_REGION || 'us-east-2' });
 const docClient = DynamoDBDocumentClient.from(dynamoClient);
 
 // =========================================================
@@ -93,11 +93,11 @@ app.post('/api/posts', upload.single('imagen'), async (req, res) => {
         const imagenUrl = req.file ? req.file.location : null;
         
         const nuevoPost = {
-            PostId: uuidv4(),      // Partition Key
-            CreatedAt: Date.now(), // Sort Key
-            Usuario: usuario,      // Atributo extra
-            Contenido: contenido,  // Atributo extra
-            ImagenUrl: imagenUrl   // Atributo extra
+            id: uuidv4(),          // <-- ¡AQUÍ ESTÁ LA MAGIA!
+            CreatedAt: Date.now(), // Lo dejamos para que el frontend pueda ordenar
+            Usuario: usuario,
+            Contenido: contenido,
+            ImagenUrl: imagenUrl
         };
 
         const params = {
